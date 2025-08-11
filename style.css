@@ -1,0 +1,197 @@
+/* 基本設定 */
+:root {
+    --bg-color: #f0f8ff; /* 明るい背景色 */
+    --main-color: #ff6347; /* トマト色 */
+    --accent-color: #ffd700; /* ゴールド */
+    --font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    text-align: center;
+    color: #333;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* タイトル */
+.title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--main-color);
+    text-shadow: 2px 2px 0 #fff, 4px 4px 0 rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* サイコロ */
+.dice-wrapper {
+    perspective: 1000px; /* 3D効果のため */
+    margin-bottom: 30px;
+}
+
+.dice {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2), inset 0 -4px 0 rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease-out, background-color 0.3s;
+}
+
+#dice-number {
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--main-color);
+}
+
+/* スタートボタン */
+.start-button {
+    width: 80%;
+    padding: 15px 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(145deg, #ff8a50, #ff6347);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(255, 99, 71, 0.4);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.start-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 3px 5px rgba(255, 99, 71, 0.4);
+}
+
+.start-button:disabled {
+    background: #ccc;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+/* 履歴エリア */
+.history-container {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px dashed #ddd;
+}
+
+.history-container h2 {
+    margin-top: 0;
+    color: #555;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.summary-item {
+    background: #f4f4f4;
+    padding: 8px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.history-log-wrapper p {
+  margin: 0 0 5px;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+.history-list li {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background: #e0e0e0;
+    border-radius: 50%;
+    font-weight: 700;
+}
+
+/* --- アニメーション --- */
+
+/* 回転中のアニメーション */
+.spinning {
+    animation: spin 0.2s linear infinite, shake 0.5s linear infinite alternate;
+}
+@keyframes spin {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
+@keyframes shake {
+    from { transform: translateX(-2px) rotate(2deg); }
+    to { transform: translateX(2px) rotate(-2deg); }
+}
+
+/* 結果表示時の共通アニメーション */
+.result-show {
+    animation: result-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes result-pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    80% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* 出目ごとの特別な演出 */
+.result-1 { background-color: #b0c4de; } /* 1: 水色 */
+.result-2 { background-color: #98fb98; } /* 2: 明るい緑 */
+.result-3 { background-color: #ffb6c1; } /* 3: ピンク */
+.result-4 { background-color: #87cefa; } /* 4: 明るい青 */
+.result-5 {
+    background-color: #f0e68c; /* 5: カーキ */
+    animation: result-pop 0.5s, flash-silver 1s;
+}
+@keyframes flash-silver {
+    0%, 100% { box-shadow: 0 0 20px #c0c0c0; }
+    50% { box-shadow: 0 0 40px #f5f5f5, 0 0 60px #c0c0c0; }
+}
+
+/* 6が出た時のジャックポット演出！ */
+.result-6 {
+    background-color: var(--accent-color);
+    animation: result-pop 0.5s, flash-gold 1s ease-out;
+}
+@keyframes flash-gold {
+    0%, 100% {
+        box-shadow: 0 0 30px var(--accent-color), 0 0 10px #fff inset;
+        color: #a0522d;
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 60px #ff0, 0 0 80px var(--accent-color), 0 0 20px #fff inset;
+        color: #fff;
+        text-shadow: 0 0 10px #000;
+    }
+}
