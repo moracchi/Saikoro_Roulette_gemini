@@ -2,52 +2,43 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <!-- スマホでの表示を最適化するための設定 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>サイコロルーレット</title>
-    <!-- Google Fontsから楽しい雰囲気のフォントを読み込み -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700;900&display=swap" rel="stylesheet">
-    <!-- CSSファイルを読み込み -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- 紙吹雪演出用のコンテナ -->
     <div id="confetti-container"></div>
-
-    <!-- アプリ全体のコンテナ -->
     <div class="container">
-
-        <!-- タイトル -->
         <header>
             <h1 class="title">サイコロルーレット</h1>
         </header>
-
-        <!-- メインコンテンツエリア -->
         <main>
-            <!-- ゾロ目ボーナス等のメッセージ表示エリア -->
             <div id="bonus-message" class="bonus-message"></div>
-            
-            <!-- サイコロ表示エリア -->
             <div class="dice-wrapper">
-                <!-- 'floating'クラスで待機中の浮遊アニメーションを適用 -->
                 <div id="dice" class="dice floating">
                     <span id="dice-number">GO!</span>
                 </div>
             </div>
-
+            
             <!-- 操作エリア -->
             <div class="controls">
                 <button id="start-button" class="start-button">スタート！</button>
             </div>
-        </main>
 
-        <!-- 履歴表示エリア -->
+            <!-- BGMコントロールエリア -->
+            <div class="bgm-controls">
+                <span class="bgm-label">BGM:</span>
+                <button id="bgm1-button" class="bgm-button">♪ 1</button>
+                <button id="bgm2-button" class="bgm-button">♪ 2</button>
+                <button id="bgm-off-button" class="bgm-button active">OFF</button>
+            </div>
+        </main>
         <footer>
             <div class="history-container">
                 <h2>これまでの記録</h2>
-                <!-- 出目の集計 -->
                 <div id="summary" class="summary">
                     <div class="summary-item">1: <span id="count-1">0</span></div>
                     <div class="summary-item">2: <span id="count-2">0</span></div>
@@ -56,7 +47,6 @@
                     <div class="summary-item">5: <span id="count-5">0</span></div>
                     <div class="summary-item">6: <span id="count-6">0</span></div>
                 </div>
-                <!-- 出目の履歴（直近10件） -->
                 <div class="history-log-wrapper">
                   <p>でた目ログ:</p>
                   <ul id="history-list" class="history-list">
@@ -65,11 +55,7 @@
                 </div>
             </div>
         </footer>
-
     </div>
-
-    <!-- JavaScriptファイルを読み込み -->
     <script src="script.js"></script>
-
 </body>
 </html>

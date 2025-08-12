@@ -43,7 +43,7 @@ body {
 /* サイコロ */
 .dice-wrapper {
     perspective: 1000px; /* 3D効果のため */
-    margin-bottom: 30px;
+    margin-bottom: 20px; /* BGMコントロールとの間隔を調整 */
 }
 
 .dice {
@@ -63,7 +63,6 @@ body {
     font-size: 5rem;
     font-weight: 900;
     color: var(--main-color);
-    /* 数字切り替え時にガタつかないように幅を固定 */
     min-width: 1ch; 
 }
 
@@ -98,118 +97,70 @@ body {
     cursor: not-allowed;
 }
 
+/* BGMコントロール */
+.bgm-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+.bgm-label {
+    font-weight: 700;
+    color: #666;
+}
+.bgm-button {
+    padding: 6px 16px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #555;
+    background-color: #f0f0f0;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.bgm-button:hover {
+    background-color: #e0e0e0;
+    border-color: #ccc;
+}
+/* 現在アクティブなBGMボタンのスタイル */
+.bgm-button.active {
+    background-color: var(--main-color);
+    color: #fff;
+    border-color: var(--main-color);
+    box-shadow: 0 2px 5px rgba(255, 99, 71, 0.3);
+}
+
 /* 履歴エリア */
-.history-container {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 2px dashed #ddd;
-}
+.history-container { margin-top: 30px; padding-top: 20px; border-top: 2px dashed #ddd; }
 .history-container h2 { margin-top: 0; color: #555; }
-.summary {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-}
+.summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
 .summary-item { background: #f4f4f4; padding: 8px; border-radius: 8px; font-weight: 700; }
 .history-log-wrapper p { margin: 0 0 5px; font-size: 0.9rem; color: #777; }
 .history-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .history-list li { width: 30px; height: 30px; line-height: 30px; background: #e0e0e0; border-radius: 50%; font-weight: 700; }
 
 /* --- アニメーション --- */
-
-/* 待機中の浮遊アニメーション */
-.floating {
-    animation: float 4s ease-in-out infinite;
-}
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-/* 回転中のアニメーション */
-.spinning {
-    animation: spin 0.2s linear infinite, shake 0.5s linear infinite alternate;
-}
+.floating { animation: float 4s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.spinning { animation: spin 0.2s linear infinite, shake 0.5s linear infinite alternate; }
 @keyframes spin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
 @keyframes shake { from { transform: translateX(-2px) rotate(2deg); } to { transform: translateX(2px) rotate(-2deg); } }
-
-/* 結果表示時の共通アニメーション */
-.result-show {
-    animation: result-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-@keyframes result-pop {
-    0% { transform: scale(0.5); opacity: 0; }
-    80% { transform: scale(1.2); }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-/* 出目ごとの特別な演出 */
-.result-1 { background-color: #b0c4de; } /* 1: 水色 */
-.result-2 { background-color: #98fb98; } /* 2: 明るい緑 */
-.result-3 { background-color: #ffb6c1; } /* 3: ピンク */
-.result-4 { background-color: #87cefa; } /* 4: 明るい青 */
-.result-5 { background-color: #f0e68c; animation: result-pop 0.5s, flash-silver 1s; } /* 5: カーキ */
-@keyframes flash-silver {
-    0%, 100% { box-shadow: 0 0 20px #c0c0c0; }
-    50% { box-shadow: 0 0 40px #f5f5f5, 0 0 60px #c0c0c0; }
-}
-
-/* 6が出た時のジャックポット演出！ */
+.result-show { animation: result-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes result-pop { 0% { transform: scale(0.5); opacity: 0; } 80% { transform: scale(1.2); } 100% { transform: scale(1); opacity: 1; } }
+.result-1 { background-color: #b0c4de; }
+.result-2 { background-color: #98fb98; }
+.result-3 { background-color: #ffb6c1; }
+.result-4 { background-color: #87cefa; }
+.result-5 { background-color: #f0e68c; animation: result-pop 0.5s, flash-silver 1s; }
+@keyframes flash-silver { 0%, 100% { box-shadow: 0 0 20px #c0c0c0; } 50% { box-shadow: 0 0 40px #f5f5f5, 0 0 60px #c0c0c0; } }
 .result-6 { background-color: var(--accent-color); animation: result-pop 0.5s, flash-gold 1s ease-out; }
-@keyframes flash-gold {
-    0%, 100% { box-shadow: 0 0 30px var(--accent-color), 0 0 10px #fff inset; color: #a0522d; }
-    50% { transform: scale(1.1); box-shadow: 0 0 60px #ff0, 0 0 80px var(--accent-color), 0 0 20px #fff inset; color: #fff; text-shadow: 0 0 10px #000; }
-}
+@keyframes flash-gold { 0%, 100% { box-shadow: 0 0 30px var(--accent-color), 0 0 10px #fff inset; color: #a0522d; } 50% { transform: scale(1.1); box-shadow: 0 0 60px #ff0, 0 0 80px var(--accent-color), 0 0 20px #fff inset; color: #fff; text-shadow: 0 0 10px #000; } }
 
 /* --- 追加の演出用CSS --- */
-
-/* ゾロ目ボーナスメッセージ */
-.bonus-message {
-    position: absolute;
-    top: 140px;
-    left: 50%;
-    transform: translateX(-50%) scale(0.5);
-    background: linear-gradient(45deg, var(--main-color), var(--accent-color));
-    color: #fff;
-    padding: 10px 25px;
-    border-radius: 30px;
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-    z-index: 100;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.bonus-message.show {
-    opacity: 1;
-    transform: translateX(-50%) scale(1);
-}
-
-/* 紙吹雪コンテナ */
-#confetti-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* クリックを邪魔しない */
-    overflow: hidden;
-    z-index: 9999;
-}
-.confetti {
-    position: absolute;
-    width: 10px;
-    height: 15px;
-    background-color: #f00; /* JSでランダムな色を設定 */
-    top: -20px; /* 画面上部から開始 */
-    opacity: 0.9;
-    animation: fall 5s linear forwards;
-}
-@keyframes fall {
-    to {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0;
-    }
-}
+.bonus-message { position: absolute; top: 140px; left: 50%; transform: translateX(-50%) scale(0.5); background: linear-gradient(45deg, var(--main-color), var(--accent-color)); color: #fff; padding: 10px 25px; border-radius: 30px; font-size: 1.3rem; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); z-index: 100; opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.bonus-message.show { opacity: 1; transform: translateX(-50%) scale(1); }
+#confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 9999; }
+.confetti { position: absolute; width: 10px; height: 15px; background-color: #f00; top: -20px; opacity: 0.9; animation: fall 5s linear forwards; }
+@keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
