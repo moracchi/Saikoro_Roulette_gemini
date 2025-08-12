@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- 紙吹雪演出用のコンテナ -->
+    <div id="confetti-container"></div>
 
     <!-- アプリ全体のコンテナ -->
     <div class="container">
@@ -24,9 +26,13 @@
 
         <!-- メインコンテンツエリア -->
         <main>
+            <!-- ゾロ目ボーナス等のメッセージ表示エリア -->
+            <div id="bonus-message" class="bonus-message"></div>
+            
             <!-- サイコロ表示エリア -->
             <div class="dice-wrapper">
-                <div id="dice" class="dice">
+                <!-- 'floating'クラスで待機中の浮遊アニメーションを適用 -->
+                <div id="dice" class="dice floating">
                     <span id="dice-number">GO!</span>
                 </div>
             </div>
